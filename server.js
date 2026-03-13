@@ -13,6 +13,7 @@ const initSocketServer = require('./realtime/socketServer');
 // Middlewares
 app.use(cors({ origin: process.env.FRONTEND_URL || '*' }));
 app.use(express.json());
+app.use(express.static('frontend'));
 
 // Rate Limiting
 const limiter = rateLimit({
@@ -44,6 +45,14 @@ app.post('/api/payments/verify', authMiddleware, verifyPayment);
 
 // Error Handling
 app.use(require('./backend/middleware/errorMiddleware'));
+
+// Fallback for SPA
+const path = require('path');
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api/')) {
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+  }
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;

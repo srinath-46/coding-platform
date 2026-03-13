@@ -1,0 +1,51 @@
+:root {
+    /* Color Palette - Vibrant uTask Inspired */
+    --primary: #D14DFF;
+    --primary-light: #E08BFF;
+    --secondary: #FF4D94;
+    --accent: #3A86FF;
+    
+    /* Light Theme Tokens */
+    --bg-light: #FDF4FF;
+    --sidebar-bg-light: #FFFFFF;
+    --card-bg-light: rgba(255, 255, 255, 0.85);
+    --text-main-light: #2D1A3B;
+    --text-muted-light: #7E6D8B;
+    --border-light: rgba(209, 77, 255, 0.1);
+    --shadow-light: 0 10px 30px rgba(209, 77, 255, 0.05);
+
+    /* Dark Theme Tokens */
+    --bg-dark: #0F0F1A;
+    --sidebar-bg-dark: #161625;
+    --card-bg-dark: rgba(22, 22, 37, 0.85);
+    --text-main-dark: #E6E1FF;
+    --text-muted-dark: #9A95B6;
+    --border-dark: rgba(209, 77, 255, 0.15);
+    --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    /* Shared Tokens */
+    --glass-blur: 12px;
+    --radius-lg: 2rem;
+    --radius-md: 1.2rem;
+    --radius-sm: 0.8rem;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Active State (Default to Light) */
+    --bg: var(--bg-light);
+    --sidebar-bg: var(--sidebar-bg-light);
+    --card-bg: var(--card-bg-light);
+    --text: var(--text-main-light);
+    --text-muted: var(--text-muted-light);
+    --border: var(--border-light);
+    --shadow: var(--shadow-light);
+}
+
+[data-theme="dark"] {
+    --bg: var(--bg-dark);
+    --sidebar-bg: var(--sidebar-bg-dark);
+    --card-bg: var(--card-bg-dark);
+    --text: var(--text-main-dark);
+    --text-muted: var(--text-muted-dark);
+    --border: var(--border-dark);
+    --shadow: var(--shadow-dark);
+}

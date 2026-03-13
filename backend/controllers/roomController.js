@@ -19,9 +19,24 @@ const roomController = {
 
   joinRoom: async (req, res, next) => {
     try {
-      const roomId = req.params.id;
-      const room = await Room.getById(roomId);
+      const id = req.params.id;
+      let room = await Room.getById(id);
       
+      if (!room) {
+        // Check if the ID is a Tournament ID to auto-create a room
+        const Tournament = require('../models/Tournament');
+        const tournament = await Tournament.getById(id);
+        if (tournament) {
+          try {
+            await Room.create(id, id, 100);
+            room = await Room.getById(id);
+          } catch (createErr) {
+            // Room might have been created by another request simultaneously
+            room = await Room.getById(id);
+          }
+        }
+      }
+
       if (!room) {
         return res.status(404).json({ success: false, message: 'Room not found' });
       }

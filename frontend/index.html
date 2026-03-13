@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeBattle | uTask Inspired Arena</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Monaco Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+</head>
+<body data-theme="light">
+    <div id="app" class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon"></div>
+                <span class="brand-text">CodeBattle</span>
+            </div>
+            
+            <nav class="nav-group">
+                <a href="/dashboard" class="nav-item active user-only" data-view="dashboard">
+                    <i data-lucide="layout-grid" class="nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/tournaments" class="nav-item user-only" data-view="tournaments">
+                    <i data-lucide="trophy" class="nav-icon"></i>
+                    <span>Tournaments</span>
+                </a>
+                <a href="/leaderboard" class="nav-item user-only" data-view="leaderboard">
+                    <i data-lucide="bar-chart-3" class="nav-icon"></i>
+                    <span>Leaderboard</span>
+                </a>
+                <div class="nav-spacer admin-only" style="height: 1.5rem; border-top: 1px solid var(--border); margin: 1.5rem 0.5rem 1rem; display: none;"></div>
+                <div class="admin-only" style="padding: 0 1rem 0.5rem; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05rem; display: none;">Admin Management</div>
+                <a href="/admin-dashboard" class="nav-item admin-only" data-view="admin-dashboard" style="display: none;">
+                    <i data-lucide="shield-check" class="nav-icon"></i>
+                    <span>Admin Panel</span>
+                </a>
+                <a href="/problems" class="nav-item admin-only" data-view="problems" style="display: none;">
+                    <i data-lucide="code-2" class="nav-icon"></i>
+                    <span>Problems</span>
+                </a>
+                <a href="/admin-rooms" class="nav-item admin-only" data-view="admin-rooms" style="display: none;">
+                    <i data-lucide="monitor" class="nav-icon"></i>
+                    <span>Rooms</span>
+                </a>
+                <a href="/admin-submissions" class="nav-item admin-only" data-view="admin-submissions" style="display: none;">
+                    <i data-lucide="scroll-text" class="nav-icon"></i>
+                    <span>Submissions</span>
+                </a>
+                <a href="/admin-rewards" class="nav-item admin-only" data-view="admin-rewards" style="display: none;">
+                    <i data-lucide="gift" class="nav-icon"></i>
+                    <span>Rewards</span>
+                </a>
+                <a href="/admin-users" class="nav-item admin-only" data-view="admin-users" style="display: none;">
+                    <i data-lucide="users" class="nav-icon"></i>
+                    <span>Users</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer" style="margin-top: auto;">
+                <a href="#" class="nav-item" id="themeToggle">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    <span>Dark Mode</span>
+                </a>
+                <a href="#" class="nav-item" id="logoutBtn">
+                    <i data-lucide="log-out" class="nav-icon"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="btn btn-ghost btn-small" id="backBtn" style="padding: 0.5rem; display: none;">
+                        <i data-lucide="chevron-left" style="width: 20px;"></i>
+                    </button>
+                    <h1 id="viewTitle" class="view-title">Dashboard</h1>
+                </div>
+                <div class="top-actions">
+                    <div class="search-bar">
+                        <i data-lucide="search" style="width: 18px; color: var(--text-muted);"></i>
+                        <input type="text" placeholder="Search tournaments...">
+                    </div>
+                    <div class="user-profile" id="userProfile">
+                        <!-- Dynamic User Info -->
+                        <div class="card" style="padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.8rem; border-radius: 50px;">
+                            <span id="navUsername" style="font-weight: 600;">Loading...</span>
+                            <div style="width: 32px; height: 32px; background: var(--border); border-radius: 50%;" id="navAvatar"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Section -->
+            <div id="viewContainer" class="view-container">
+                <!-- Content will be injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Logic -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
