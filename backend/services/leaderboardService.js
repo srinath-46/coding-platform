@@ -2,7 +2,6 @@ const pool = require('../config/db');
 
 const leaderboardService = {
   getRoomLeaderboard: async (roomId) => {
-    // Ranking logic: Most problems solved DESC, then Highest total score DESC, then Last submission time ASC
     const [rows] = await pool.execute(
       `SELECT 
         u.id, 
@@ -24,9 +23,10 @@ const leaderboardService = {
   },
 
   getGlobalLeaderboard: async (limit = 50) => {
-    const [rows] = await pool.execute(
+    const parsedLimit = parseInt(limit) || 50;
+    const [rows] = await pool.query(
       'SELECT id, username, rating, total_solved FROM users ORDER BY rating DESC, total_solved DESC LIMIT ?',
-      [limit]
+      [parsedLimit]
     );
     return rows;
   }

@@ -1,0 +1,9 @@
+{
+  "title": "API Test Tournament",
+  "description": "Testing admin flow",
+  "entry_fee": 100,
+  "prize_pool": 500,
+  "start_time": "2026-03-20 18:00:00",
+  "end_time": "2026-03-20 20:00:00",
+  "max_participants": 50
+}

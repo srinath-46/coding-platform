@@ -17,29 +17,22 @@ const submissionController = {
       const submissionId = await Submission.create({
         user_id,
         problem_id,
-        room_id,
+        room_id: room_id || null,
         language,
         source_code
       });
-
-      // API returns immediately (Async execution pattern)
       res.status(202).json({ success: true, submissionId, status: 'pending' });
-
-      // Run code execution in background
       Promise.resolve().then(async () => {
         try {
           const result = await codeRunnerService.processSubmission(submissionId);
           
-          // Notify user of completion
           websocketService.sendToUser(user_id, 'submission-result', result);
 
           if (room_id) {
-            // Update participant stats if in a room
             if (result.status === 'accepted') {
               await Room.updateParticipantScore(room_id, user_id, result.score, 1);
             }
             
-            // Broadcast updated leaderboard to room
             const leaderboard = await leaderboardService.getRoomLeaderboard(room_id);
             websocketService.broadcastToRoom(room_id, 'leaderboard-update', leaderboard);
           }

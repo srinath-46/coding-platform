@@ -26,6 +26,10 @@ const User = {
 
   updateRating: async (id, delta) => {
     await pool.execute('UPDATE users SET rating = rating + ?, total_solved = total_solved + 1 WHERE id = ?', [delta, id]);
+  },
+
+  promoteToAdmin: async (id) => {
+    await pool.execute('UPDATE users SET is_admin = TRUE WHERE id = ?', [id]);
   }
 };
 

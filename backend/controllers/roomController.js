@@ -28,7 +28,6 @@ const roomController = {
 
       await Room.addParticipant(roomId, req.user.id);
       
-      // Notify other players in the room via Socket
       websocketService.broadcastToRoom(roomId, 'player-joined', { 
         userId: req.user.id, 
         username: req.user.username 

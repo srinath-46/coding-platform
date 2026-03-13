@@ -14,7 +14,7 @@ const pool = mysql2.createPool({
   keepAliveInitialDelay: 0,
 });
 
-// Test connection on startup
+
 (async () => {
   try {
     const conn = await pool.getConnection();

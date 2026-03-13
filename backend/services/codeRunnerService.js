@@ -23,11 +23,10 @@ const codeRunnerService = {
       try {
         const result = await executeCode(submission.source_code, submission.language, testCase.input);
         
-        // Normalize output for comparison
         const actual = (result.stdout || '').trim();
         const expected = (testCase.expected_output || '').trim();
 
-        if (result.statusId !== 3) { // 3 is 'Accepted' in Judge0
+        if (result.statusId !== 3) {
           finalStatus = result.status.toLowerCase().replace(/ /g, '_');
           break;
         }
@@ -47,13 +46,12 @@ const codeRunnerService = {
       }
     }
 
-    // Problem points calculation
+
     const problem = await Problem.getById(submission.problem_id);
     if (finalStatus === 'accepted') {
       totalScore = problem.points;
     } else {
-      totalScore = Math.floor((passedCount / testCases.length) * problem.points * 0.1); // Partial credit? Or 0. Let's do 0 for competitive symmetry.
-      totalScore = 0; // Standard competitive coding: all or nothing per problem usually.
+      totalScore = 0;
     }
 
     const updateData = {
@@ -63,7 +61,7 @@ const codeRunnerService = {
       total_cases: testCases.length,
       execution_time_ms: Math.floor(maxTime * 1000),
       memory_used_kb: maxMemory,
-      judge0_token: null // Handled synchronously in this basic version
+      judge0_token: null
     };
 
     await Submission.update(submissionId, updateData);

@@ -7,7 +7,7 @@ const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 // Configs
-require('./backend/config/db'); // Init DB connection
+require('./backend/config/db');
 const initSocketServer = require('./realtime/socketServer');
 
 // Middlewares
@@ -16,8 +16,8 @@ app.use(express.json());
 
 // Rate Limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100
 });
 app.use('/api/', limiter);
 
@@ -30,8 +30,11 @@ app.use('/api/tournaments', require('./backend/routes/tournamentRoutes'));
 app.use('/api/rooms', require('./backend/routes/roomRoutes'));
 app.use('/api/submissions', require('./backend/routes/submissionRoutes'));
 app.use('/api/leaderboard', require('./backend/routes/leaderboardRoutes'));
+app.use('/api/admin', require('./backend/routes/adminRoutes'));
+app.use('/api/problems', require('./backend/routes/problemRoutes'));
+app.use('/api/rewards', require('./backend/routes/rewardRoutes'));
 
-// Temporary Payment Routes (Move to routes folder for better structure if preferred)
+
 const createOrder = require('./payments/createOrder');
 const verifyPayment = require('./payments/verifyPayment');
 const { authMiddleware } = require('./backend/middleware/authMiddleware');

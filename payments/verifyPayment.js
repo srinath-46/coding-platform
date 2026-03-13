@@ -1,9 +1,6 @@
 const crypto = require('crypto');
 const pool = require('../backend/config/db');
 
-/**
- * Verifies Razorpay payment signature and updates status
- */
 const verifyPayment = async (req, res, next) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -15,7 +12,6 @@ const verifyPayment = async (req, res, next) => {
       .digest('hex');
 
     if (expectedSignature === razorpay_signature) {
-      // Payment successful
       await pool.execute(
         `UPDATE payments 
          SET payment_id = ?, signature = ?, status = 'captured' 

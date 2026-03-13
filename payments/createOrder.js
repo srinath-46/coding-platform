@@ -2,9 +2,6 @@ const razorpay = require('../backend/config/razorpay');
 const Tournament = require('../backend/models/Tournament');
 const pool = require('../backend/config/db');
 
-/**
- * Creates a Razorpay order for tournament entry
- */
 const createOrder = async (req, res, next) => {
   try {
     const { tournamentId } = req.body;
@@ -23,7 +20,7 @@ const createOrder = async (req, res, next) => {
 
     const order = await razorpay.orders.create(options);
 
-    // Record order in DB
+
     await pool.execute(
       `INSERT INTO payments (user_id, tournament_id, order_id, amount, status)
        VALUES (?, ?, ?, ?, 'created')`,

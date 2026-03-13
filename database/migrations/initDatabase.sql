@@ -137,3 +137,17 @@ CREATE TABLE IF NOT EXISTS payments (
   FOREIGN KEY (tournament_id) REFERENCES tournaments(id) ON DELETE CASCADE,
   INDEX idx_user_tournament (user_id, tournament_id)
 );
+
+-- ── 7. Rewards ──────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS rewards (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  tournament_id  INT NOT NULL,
+  user_id        INT NOT NULL,
+  rank           INT NOT NULL,
+  reward_amount  DECIMAL(10,2) NOT NULL,
+  payment_status ENUM('pending', 'paid', 'failed') DEFAULT 'pending',
+  created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (tournament_id) REFERENCES tournaments(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_tournament_user (tournament_id, user_id)
+);

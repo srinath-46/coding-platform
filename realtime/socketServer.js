@@ -12,7 +12,7 @@ const initSocketServer = (server) => {
 
   websocketService.init(io);
 
-  // Auth Middleware for Socket
+
   io.use((socket, next) => {
     const token = socket.handshake.auth.token;
     if (!token) return next(new Error('Authentication error'));
@@ -27,7 +27,6 @@ const initSocketServer = (server) => {
   io.on('connection', (socket) => {
     console.log(`🔌 Client connected: ${socket.user.username} (${socket.id})`);
     
-    // Join personal room for 1-to-1 notifications
     socket.join(`user_${socket.user.id}`);
 
     socket.on('join-room', (roomId) => {
